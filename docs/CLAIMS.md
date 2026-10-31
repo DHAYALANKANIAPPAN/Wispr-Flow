@@ -17,7 +17,7 @@ All claims regarding Adaptive IQ are cataloged below in compliance with Section 
 | **Adaptive Item Budget to Weakest** | **13.40 questions** on average | [`eval/results/policy_compare.json`](file:///home/dustin/Project/Wispr-Flow/eval/results/policy_compare.json) | 50 synthetic students comparing adaptive vs random |
 | **Random Item Budget to Weakest** | **11.34 questions** on average | [`eval/results/policy_compare.json`](file:///home/dustin/Project/Wispr-Flow/eval/results/policy_compare.json) | Same 50 synthetic students and seeds |
 | **Curriculum Prerequisite Trade-off** | **$-18.17\%$** relative step speed | [`eval/results/policy_compare.json`](file:///home/dustin/Project/Wispr-Flow/eval/results/policy_compare.json) | Random samples locked concepts immediately; Adaptive respects prerequisite unlocks |
-| **Backend Test Coverage** | **31 tests passing** (100% pass rate) | Pytest suite: `backend/tests/` | Covers auth, DAG, schema, learner model, decisions, pipeline, adaptive engine, revision |
+| **Backend Test Coverage** | **64 tests passing** (100% pass rate) | Pytest suite: `backend/tests/` | Covers auth, DAG, schema, learner model, decisions, pipeline, adaptive engine, revision, evaluation, analytics, text clean |
 
 ---
 
@@ -27,7 +27,7 @@ All claims regarding Adaptive IQ are cataloged below in compliance with Section 
 | :--- | :--- | :--- | :--- |
 | **Atomic 9-Step Pipeline** | Active / Production | [`backend/app/main.py`](file:///home/dustin/Project/Wispr-Flow/backend/app/main.py) | Verified in `backend/tests/test_pipeline.py` |
 | **Fail-Closed Misconception Taxonomy** | Active / Production | [`backend/app/misconceptions.py`](file:///home/dustin/Project/Wispr-Flow/backend/app/misconceptions.py) | 5 controlled IDs + `NONE`; unknown IDs coerce to `NONE` |
-| **Wispr Flow Voice Input Integration** | Planned (Phase 4) | Frontend textarea | Multi-line textarea keeps raw text and line breaks without clearing on blur |
+| **Wispr Flow Voice Input Integration** | Active (Phase 4 Complete) | rontend/components/QuizView.tsx | Multi-line textarea keeps raw text and line breaks without clearing on blur, with speech dictation |
 | **PostgreSQL Deployment DB** | Planned (Deploy) | `backend/app/db.py` | Database URL toggle via `DATABASE_URL` |
 | **Next.js & Recharts Dashboard** | Planned (Phase 4) | `frontend/` | Reads from `GET /students/{id}/mastery` and `GET /teachers/{id}/class-summary` |
 
