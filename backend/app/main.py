@@ -503,3 +503,50 @@ def submit_attempt(
             reason=next_q_decision["reason"],
         ),
     )
+
+
+@app.get("/students/{student_id}/mastery", tags=["analytics"])
+def get_student_mastery_dashboard(
+    student_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return student mastery breakdown, weakest/strongest concepts, and review schedules."""
+    require_student_access(student_id=student_id, current_user=current_user)
+    from backend.app.analytics import student_summary
+    return student_summary(student_id=student_id, db=db)
+
+
+@app.get("/students/{student_id}/decisions", tags=["analytics"])
+def get_student_decision_history(
+    student_id: str,
+    limit: int = 50,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return explainable decision logs powering the 'Why am I seeing this' student & teacher views."""
+    require_student_access(student_id=student_id, current_user=current_user)
+    from backend.app.decisions import get_student_decisions
+    records = get_student_decisions(db=db, student_id=student_id, limit=limit)
+    return [
+        {
+            "id": r.id,
+            "student_id": r.student_id,
+            "decision_type": r.decision_type,
+            "payload": r.payload_json,
+            "created_at": r.created_at.isoformat(),
+        }
+        for r in records
+    ]
+
+
+@app.get("/teachers/{teacher_id}/class-summary", tags=["analytics"])
+def get_teacher_class_dashboard(
+    teacher_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return aggregate class mastery, most-missed concepts, students needing support, and misconception distribution."""
+    require_teacher_access(teacher_id=teacher_id, current_user=current_user)
+    from backend.app.analytics import class_summary
+    return class_summary(teacher_id=teacher_id, db=db)
