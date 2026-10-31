@@ -1,0 +1,61 @@
+{
+  "dataset": "eval/human_labels.jsonl",
+  "sample_size": 40,
+  "measured_metrics": {
+    "misconception_agreement_rate": 0.9,
+    "misconception_cohens_kappa": 0.7835,
+    "reasoning_level_agreement_rate": 0.325,
+    "reasoning_level_cohens_kappa": 0.0,
+    "invalid_llm_outputs_count": 0
+  },
+  "confusion_matrix": {
+    "MC_PROPORTIONAL_I_R": {
+      "MC_PROPORTIONAL_I_R": 1,
+      "MC_RESISTANCE_RISES_WITH_I": 0,
+      "MC_CURRENT_USED_UP": 0,
+      "MC_VOLTAGE_SPLITS_PARALLEL": 0,
+      "MC_POWER_IS_ENERGY": 0,
+      "NONE": 2
+    },
+    "MC_RESISTANCE_RISES_WITH_I": {
+      "MC_PROPORTIONAL_I_R": 0,
+      "MC_RESISTANCE_RISES_WITH_I": 1,
+      "MC_CURRENT_USED_UP": 0,
+      "MC_VOLTAGE_SPLITS_PARALLEL": 0,
+      "MC_POWER_IS_ENERGY": 0,
+      "NONE": 1
+    },
+    "MC_CURRENT_USED_UP": {
+      "MC_PROPORTIONAL_I_R": 0,
+      "MC_RESISTANCE_RISES_WITH_I": 0,
+      "MC_CURRENT_USED_UP": 2,
+      "MC_VOLTAGE_SPLITS_PARALLEL": 0,
+      "MC_POWER_IS_ENERGY": 0,
+      "NONE": 1
+    },
+    "MC_VOLTAGE_SPLITS_PARALLEL": {
+      "MC_PROPORTIONAL_I_R": 0,
+      "MC_RESISTANCE_RISES_WITH_I": 0,
+      "MC_CURRENT_USED_UP": 0,
+      "MC_VOLTAGE_SPLITS_PARALLEL": 3,
+      "MC_POWER_IS_ENERGY": 0,
+      "NONE": 0
+    },
+    "MC_POWER_IS_ENERGY": {
+      "MC_PROPORTIONAL_I_R": 0,
+      "MC_RESISTANCE_RISES_WITH_I": 0,
+      "MC_CURRENT_USED_UP": 0,
+      "MC_VOLTAGE_SPLITS_PARALLEL": 0,
+      "MC_POWER_IS_ENERGY": 2,
+      "NONE": 0
+    },
+    "NONE": {
+      "MC_PROPORTIONAL_I_R": 0,
+      "MC_RESISTANCE_RISES_WITH_I": 0,
+      "MC_CURRENT_USED_UP": 0,
+      "MC_VOLTAGE_SPLITS_PARALLEL": 0,
+      "MC_POWER_IS_ENERGY": 0,
+      "NONE": 27
+    }
+  }
+}
