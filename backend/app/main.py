@@ -313,10 +313,57 @@ def get_next_question(
 ):
     """Retrieve the next recommended question for the authenticated student."""
     decision = select_next_question(student_id=current_user.id, db=db)
+    q_data = None
+    if decision["question_id"]:
+        q = db.query(Question).filter_by(id=decision["question_id"]).first()
+        if q:
+            cids = [qc.concept_id for qc in q.concepts]
+            q_data = QuestionOut(
+                id=q.id,
+                text=q.text,
+                answer_key=q.answer_key,
+                answer_type=q.answer_type,
+                tolerance=q.tolerance,
+                difficulty=q.difficulty,
+                question_type=q.question_type,
+                rubric=q.rubric,
+                status=q.status,
+                concept_ids=cids,
+            )
+
     return NextQuestionDecision(
         question_id=decision["question_id"],
         concept_id=decision["concept_id"],
         reason=decision["reason"],
+        question=q_data,
+    )
+
+
+@app.get("/questions/{question_id}", response_model=QuestionOut, tags=["adaptive"])
+def get_question_by_id(
+    question_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Retrieve question metadata and prompt by identifier."""
+    q = db.query(Question).filter_by(id=question_id).first()
+    if not q:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Question with ID '{question_id}' not found",
+        )
+    cids = [qc.concept_id for qc in q.concepts]
+    return QuestionOut(
+        id=q.id,
+        text=q.text,
+        answer_key=q.answer_key,
+        answer_type=q.answer_type,
+        tolerance=q.tolerance,
+        difficulty=q.difficulty,
+        question_type=q.question_type,
+        rubric=q.rubric,
+        status=q.status,
+        concept_ids=cids,
     )
 
 
@@ -501,6 +548,22 @@ def submit_attempt(
             question_id=next_q_decision["question_id"],
             concept_id=next_q_decision["concept_id"],
             reason=next_q_decision["reason"],
+            question=(
+                QuestionOut(
+                    id=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().id,
+                    text=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().text,
+                    answer_key=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().answer_key,
+                    answer_type=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().answer_type,
+                    tolerance=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().tolerance,
+                    difficulty=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().difficulty,
+                    question_type=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().question_type,
+                    rubric=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().rubric,
+                    status=db.query(Question).filter_by(id=next_q_decision["question_id"]).first().status,
+                    concept_ids=[qc.concept_id for qc in db.query(Question).filter_by(id=next_q_decision["question_id"]).first().concepts],
+                )
+                if next_q_decision["question_id"] and db.query(Question).filter_by(id=next_q_decision["question_id"]).first()
+                else None
+            ),
         ),
     )
 

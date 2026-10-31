@@ -253,6 +253,10 @@ class ApiService {
     return this.request<NextQuestionResponse>('/questions/next');
   }
 
+  async getQuestion(id: string): Promise<QuestionData> {
+    return this.request<QuestionData>(`/questions/${id}`);
+  }
+
   async submitAttempt(data: {
     question_id: string;
     student_answer: string;
