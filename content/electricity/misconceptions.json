@@ -1,0 +1,46 @@
+{
+  "controlled_misconceptions": [
+    {
+      "id": "MC_PROPORTIONAL_I_R",
+      "name": "Current and Resistance Direct Proportionality",
+      "description": "Believes that electric current and resistance are directly proportional (e.g. increasing resistance increases current).",
+      "example_wrong_answer": "When the resistor value was doubled, more current flowed through the circuit because resistance increases current.",
+      "example_correct_but_incomplete": "Current depends on the resistance value according to Ohm's law."
+    },
+    {
+      "id": "MC_RESISTANCE_RISES_WITH_I",
+      "name": "Resistance Dependent on Current at Constant V",
+      "description": "Believes that intrinsic resistance rises when current increases at constant potential difference.",
+      "example_wrong_answer": "As more current passes through the conductor at fixed voltage, the resistance of the wire increases.",
+      "example_correct_but_incomplete": "Resistance is a property of the wire material and geometry."
+    },
+    {
+      "id": "MC_CURRENT_USED_UP",
+      "name": "Current Consumption in Components",
+      "description": "Believes electric current is consumed or 'used up' by components (like bulbs or resistors) as it travels along a series circuit.",
+      "example_wrong_answer": "The second bulb is dimmer because the first bulb consumed half the current.",
+      "example_correct_but_incomplete": "Current flows through both bulbs in the series circuit."
+    },
+    {
+      "id": "MC_VOLTAGE_SPLITS_PARALLEL",
+      "name": "Voltage Division in Parallel Branches",
+      "description": "Believes that potential difference divides equally across parallel branches rather than remaining identical.",
+      "example_wrong_answer": "Since there are two parallel branches across a 12V supply, each branch gets 6V.",
+      "example_correct_but_incomplete": "Parallel branches share common connection nodes."
+    },
+    {
+      "id": "MC_POWER_IS_ENERGY",
+      "name": "Power and Energy Confusion",
+      "description": "Confuses electrical power (Watts, rate of energy transfer) with electrical energy (Joules or kWh).",
+      "example_wrong_answer": "A 100 Watt appliance consumed 100 Joules total regardless of how long it ran.",
+      "example_correct_but_incomplete": "Power is measured in Watts and depends on voltage and current."
+    },
+    {
+      "id": "NONE",
+      "name": "No Controlled Misconception",
+      "description": "No recognized controlled misconception detected; reasoning is either sound, incomplete, or ambiguous.",
+      "example_wrong_answer": "Current decreases because resistance blocks the movement of charge.",
+      "example_correct_but_incomplete": "The current changed when voltage changed."
+    }
+  ]
+}
