@@ -1,0 +1,32 @@
+# Environment & Secrets
+.env
+*.env
+.env.*
+
+# Databases & Local state
+*.db
+*.sqlite
+*.sqlite3
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+.pytest_cache
+.coverage
+htmlcov/
+
+# Evaluation temp outputs
+eval/results/*.tmp
+
+# Node / Frontend (Phase 4)
+node_modules/
+.next/
+dist/
+build/
+.cache/
+
+# OS artifacts
+.DS_Store
+Thumbs.db

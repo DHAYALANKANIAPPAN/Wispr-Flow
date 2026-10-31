@@ -1,0 +1,36 @@
+{
+  "intervals": [
+    {
+      "condition": "incorrect",
+      "days": 0,
+      "rule": "incorrect_same_session"
+    },
+    {
+      "condition": "mastery_below_0.40",
+      "max_mastery": 0.40,
+      "days": 1,
+      "rule": "critical_review_1_day"
+    },
+    {
+      "condition": "mastery_0.40_to_0.70",
+      "min_mastery": 0.40,
+      "max_mastery": 0.70,
+      "days": 3,
+      "rule": "reinforce_review_3_days"
+    },
+    {
+      "condition": "mastery_0.70_to_0.90",
+      "min_mastery": 0.70,
+      "max_mastery": 0.90,
+      "days": 7,
+      "rule": "consolidation_review_7_days"
+    },
+    {
+      "condition": "mastery_above_0.90_strong",
+      "min_mastery": 0.90,
+      "min_consecutive_strong": 3,
+      "days": 14,
+      "rule": "mastered_review_14_days"
+    }
+  ]
+}

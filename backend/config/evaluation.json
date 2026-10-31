@@ -1,0 +1,9 @@
+{
+  "weights": {
+    "correct_sound": 1.0,
+    "correct_none": 0.8,
+    "correct_weak": 0.7,
+    "incorrect_none": 0.3,
+    "incorrect_misconception": 0.0
+  }
+}
