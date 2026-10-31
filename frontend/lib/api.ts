@@ -138,10 +138,12 @@ export interface TeacherClassSummary {
   most_missed_concept: string | null;
   students_needing_support: Array<{
     student_id: string;
-    name: string;
+    student_name?: string;
+    name?: string;
     weakest_concept: string;
-    weakest_mastery: number;
-    flag_reason: string;
+    weakest_mastery?: number;
+    average_mastery?: number;
+    flag_reason?: string;
   }>;
   misconception_distribution: Record<string, number>;
 }
