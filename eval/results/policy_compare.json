@@ -1,0 +1,12 @@
+{
+  "status": "synthetic",
+  "timestamp": "2026-10-31T09:22:36.427947+00:00",
+  "random_seed": 42,
+  "sample_size": 50,
+  "max_budget": 25,
+  "measured_metrics": {
+    "adaptive_mean_questions_to_weakest": 13.4,
+    "random_mean_questions_to_weakest": 11.34,
+    "efficiency_gain_percentage": -18.17
+  }
+}

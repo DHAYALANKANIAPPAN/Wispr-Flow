@@ -1,0 +1,59 @@
+{
+  "subject_id": "physics_cbse_10",
+  "chapter": "Electricity",
+  "status": "initial, validate against textbook",
+  "concepts": [
+    {
+      "id": "electric_current",
+      "name": "Electric Current",
+      "description": "Rate of flow of electric charges through a conductor (I = Q/t).",
+      "prerequisites": []
+    },
+    {
+      "id": "potential_difference",
+      "name": "Potential Difference",
+      "description": "Work done to move a unit positive charge between two points in an electric field (V = W/Q).",
+      "prerequisites": []
+    },
+    {
+      "id": "resistance",
+      "name": "Resistance",
+      "description": "Opposition offered by a substance to the flow of electric current (R = rho * L / A).",
+      "prerequisites": []
+    },
+    {
+      "id": "ohms_law",
+      "name": "Ohm's Law",
+      "description": "Direct proportionality of current to potential difference at constant temperature (V = IR).",
+      "prerequisites": [
+        "electric_current",
+        "potential_difference",
+        "resistance"
+      ]
+    },
+    {
+      "id": "series_circuits",
+      "name": "Series Circuits",
+      "description": "Connection of resistors in a single closed loop where current remains identical (Req = sum(Ri)).",
+      "prerequisites": [
+        "resistance"
+      ]
+    },
+    {
+      "id": "parallel_circuits",
+      "name": "Parallel Circuits",
+      "description": "Connection of resistors across common points where voltage across branches is identical (1/Req = sum(1/Ri)).",
+      "prerequisites": [
+        "resistance"
+      ]
+    },
+    {
+      "id": "electrical_power",
+      "name": "Electrical Power",
+      "description": "Rate at which electric energy is dissipated or consumed in an electric circuit (P = VI = I^2*R = V^2/R).",
+      "prerequisites": [
+        "ohms_law"
+      ]
+    }
+  ]
+}
