@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3000",
-    "build": "next build",
+    "build:css": "tailwindcss -i app/tailwind.css -o app/globals.css",
+    "dev": "tailwindcss -i app/tailwind.css -o app/globals.css && next dev -p 3000",
+    "build": "tailwindcss -i app/tailwind.css -o app/globals.css && next build",
     "start": "next start -p 3000",
     "lint": "next lint"
   },
