@@ -90,6 +90,7 @@ class NextQuestionDecision(BaseModel):
     question_id: Optional[str] = None
     concept_id: Optional[str] = None
     reason: Dict[str, Any]
+    question: Optional[QuestionOut] = None
 
 
 class SubmitAnswerResponse(BaseModel):

@@ -54,6 +54,14 @@ export const QuizView: React.FC<QuizViewProps> = ({ user, onOpenAuth, onViewDeci
     setSubmitError(null);
     try {
       const data = await api.getNextQuestion();
+      if (data.question_id && !data.question) {
+        try {
+          const qData = await api.getQuestion(data.question_id);
+          data.question = qData;
+        } catch (fetchErr) {
+          console.warn('Could not fetch question metadata by ID:', fetchErr);
+        }
+      }
       setCurrentQuestion(data);
       // Reset inputs for new question
       setStudentAnswer('');
@@ -390,6 +398,31 @@ export const QuizView: React.FC<QuizViewProps> = ({ user, onOpenAuth, onViewDeci
               )}
             </button>
           </form>
+        </div>
+      )}
+
+      {/* When no question object is loaded but decision was returned */}
+      {!loadingQuestion && currentQuestion && !currentQuestion.question && (
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-4 mb-8 shadow-xl">
+          <div className="inline-flex p-3 rounded-full bg-slate-800 text-slate-400 mb-1">
+            <HelpCircle className="h-8 w-8 text-cyan-400" />
+          </div>
+          <h3 className="text-lg font-bold text-white">
+            {currentQuestion.question_id ? 'Loading Question Prompt...' : 'All Current Concepts Addressed'}
+          </h3>
+          <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
+            {currentQuestion.question_id
+              ? `Adaptive policy selected question ID '${currentQuestion.question_id}' for concept '${currentQuestion.concept_id}'.`
+              : (currentQuestion.reason?.detail || 'Root concepts are being assessed. Practice more to reach 60% mastery and unlock dependent concepts like Ohm\'s Law and Circuits!')}
+          </p>
+          <div className="flex justify-center space-x-3 pt-2">
+            <button
+              onClick={fetchNextQuestion}
+              className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs transition-all shadow-md"
+            >
+              Fetch Next Question
+            </button>
+          </div>
         </div>
       )}
 
