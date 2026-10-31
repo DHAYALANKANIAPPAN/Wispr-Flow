@@ -10,17 +10,20 @@ import { QuizView } from '@/components/QuizView';
 import { StudentDashboard } from '@/components/StudentDashboard';
 import { TeacherDashboard } from '@/components/TeacherDashboard';
 import { ClaimsView } from '@/components/ClaimsView';
-import { Shield, Sparkles, BookOpen, Brain, BarChart3, Users, HelpCircle, Terminal } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [activeTab, setActiveTab] = useState<string>('concepts');
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isDecisionOpen, setIsDecisionOpen] = useState(false);
   const [backendOnline, setBackendOnline] = useState<boolean | null>(null);
 
-  // Check backend health and recover user session on initial mount
+  // Client-side mount & session hydration
   useEffect(() => {
+    setMounted(true);
+
     const initApp = async () => {
       try {
         await api.checkHealth();
@@ -29,7 +32,8 @@ export default function Home() {
         setBackendOnline(false);
       }
 
-      if (api.getToken()) {
+      const token = api.getToken();
+      if (token && token !== 'undefined' && token !== 'null') {
         try {
           const userData = await api.getMe();
           setUser(userData);
@@ -42,7 +46,6 @@ export default function Home() {
 
     initApp();
 
-    // Health check ping every 30 seconds
     const interval = setInterval(async () => {
       try {
         await api.checkHealth();
@@ -82,14 +85,25 @@ export default function Home() {
     }
   };
 
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center space-y-4 text-slate-100">
+        <div className="h-10 w-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs text-slate-400 font-mono tracking-wider uppercase">Loading Adaptive IQ...</p>
+      </div>
+    );
+  }
+
   return (
-    <main className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-slate-950">
+    <main className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-slate-950 relative">
       {/* Top Navigation */}
       <Navbar
         user={user}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenAuth={() => {
+          setIsAuthOpen(true);
+        }}
         onLogout={handleLogout}
         backendOnline={backendOnline}
       />
