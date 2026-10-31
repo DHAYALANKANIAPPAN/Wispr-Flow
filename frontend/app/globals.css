@@ -606,8 +606,8 @@ video {
   z-index: 40;
 }
 
-.z-50 {
-  z-index: 50;
+.z-\[9999\] {
+  z-index: 9999;
 }
 
 .mx-auto {
@@ -1119,6 +1119,10 @@ video {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-4 {
+  border-width: 4px;
 }
 
 .border-b {
