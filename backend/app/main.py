@@ -23,6 +23,7 @@ from backend.app.schemas import (
     UserLogin,
     UserOut,
     TokenResponse,
+    ConceptOut,
 )
 from backend.app.auth import (
     hash_password,
@@ -167,3 +168,52 @@ def get_teacher_class_auth_test(
     """
     require_teacher_access(teacher_id=teacher_id, current_user=current_user)
     return {"status": "authorized", "teacher_id": teacher_id}
+
+
+@app.get("/concepts", response_model=list[ConceptOut], tags=["curriculum"])
+def list_concepts(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """List chapter concepts along with prerequisite locks and mastery for the authenticated student.
+
+    Satisfies Gate 1: A student logs in and receives the chapter's concepts
+    with individual locked / unlocked status and current mastery.
+
+    Args:
+        current_user: Authenticated user.
+        db: Database session.
+
+    Returns:
+        list[ConceptOut]: Concepts with unlocked status and mastery.
+    """
+    from backend.app.knowledge_graph import knowledge_graph
+    from backend.app.models import LearnerMastery
+
+    # Preload student mastery
+    mastery_records = db.query(LearnerMastery).filter_by(student_id=current_user.id).all()
+    mastery_map = {m.concept_id: m.mastery for m in mastery_records}
+
+    all_concepts = knowledge_graph.get_all_concepts()
+    result = []
+
+    for c in all_concepts:
+        cid = c["id"]
+        is_unlocked = knowledge_graph.is_unlocked(
+            student_id=current_user.id,
+            concept_id=cid,
+            mastery_map=mastery_map,
+        )
+        result.append(
+            ConceptOut(
+                id=cid,
+                subject_id="physics_cbse_10",
+                name=c["name"],
+                description=c.get("description"),
+                prerequisites=c["prerequisites"],
+                is_unlocked=is_unlocked,
+                mastery=mastery_map.get(cid, 0.5 if is_unlocked else None),
+            )
+        )
+
+    return result
