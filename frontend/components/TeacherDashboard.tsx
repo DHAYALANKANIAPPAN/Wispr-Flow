@@ -344,17 +344,22 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800">
-                    {summary.students_needing_support.map((s) => (
-                      <tr key={s.student_id} className="hover:bg-slate-850/50 transition-colors">
-                        <td className="py-3 px-4 font-semibold text-slate-200">{s.name}</td>
-                        <td className="py-3 px-4 font-mono text-slate-400">{s.student_id}</td>
-                        <td className="py-3 px-4 font-mono text-rose-300">{s.weakest_concept}</td>
-                        <td className="py-3 px-4 font-mono font-bold text-rose-400">
-                          {(s.weakest_mastery * 100).toFixed(1)}%
-                        </td>
-                        <td className="py-3 px-4 text-slate-300">{s.flag_reason}</td>
-                      </tr>
-                    ))}
+                    {summary.students_needing_support.map((s) => {
+                      const displayName = s.student_name ?? s.name ?? 'Student';
+                      const masteryVal = s.weakest_mastery ?? s.average_mastery ?? 0.35;
+                      const reason = s.flag_reason ?? (s.average_mastery && s.average_mastery < 0.50 ? 'Average cohort mastery < 50%' : 'Low concept mastery (< 40%)');
+                      return (
+                        <tr key={s.student_id} className="hover:bg-slate-850/50 transition-colors">
+                          <td className="py-3 px-4 font-semibold text-slate-200">{displayName}</td>
+                          <td className="py-3 px-4 font-mono text-slate-400">{s.student_id}</td>
+                          <td className="py-3 px-4 font-mono text-rose-300">{s.weakest_concept}</td>
+                          <td className="py-3 px-4 font-mono font-bold text-rose-400">
+                            {(masteryVal * 100).toFixed(1)}%
+                          </td>
+                          <td className="py-3 px-4 text-slate-300">{reason}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
